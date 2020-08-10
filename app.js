@@ -1,4 +1,3 @@
-// So this project is all about your daily budget and income and expense tracker with nice gui
 // BUDGET CONTROLLER
 var budgetController = (function () {
   var Expense = function (id, description, value) {
