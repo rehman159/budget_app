@@ -455,7 +455,7 @@ var budgetController = (function () {})();
 // UI Controller
 var UIController = (function () {
   var DOMstrings = {
-    inputType: ".add_type",
+    inputType: ".add__type",
     inputDescription: ".add__description",
     inputValue: ".add__value",
   };
