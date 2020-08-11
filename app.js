@@ -490,3 +490,9 @@ var controller = (function (budgetCtrl, UICtrl) {
     }
   });
 })(budgetController, UIController);
+
+// ye may ny r1 may likha tah
+
+/// ye may ny master may likha tah before commit of master
+
+/// ye finnally r1 wala hai commit k baad
