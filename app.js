@@ -450,7 +450,51 @@
 
 // controller.init();
 // Budget Controller
-var budgetController = (function () {})();
+var budgetController = (function () {
+  var Expense = function (id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  };
+  var Income = function (id, description, value) {
+    this.id = id;
+    this.description = description;
+    this.value = value;
+  };
+
+  var data = {
+    allItems: {
+      exp: [],
+      inc: [],
+    },
+    totals: {
+      exp: 0,
+      inc: 0,
+    },
+  };
+
+  return {
+    addItem: function (type, des, val) {
+      var newItem;
+      // created new Id for our element
+      if (data.allItems[type].length > 0)
+        ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+      else ID = 0;
+      // created new item based on inc or exp type
+      if (type === "exp") newItem = new Expense(ID, des, val);
+      else if (type === "inc") newItem = new Income(ID, des, val);
+
+      // Push it into our Data Structure
+      data.allItems[type].push(newItem);
+
+      // return the new element
+      return newItem;
+    },
+    testing() {
+      console.log(data);
+    },
+  };
+})();
 
 // UI Controller
 var UIController = (function () {
@@ -458,41 +502,57 @@ var UIController = (function () {
     inputType: ".add__type",
     inputDescription: ".add__description",
     inputValue: ".add__value",
+    inputBtn: ".add__btn",
   };
   return {
     getInput: function () {
       return {
         type: document.querySelector(DOMstrings.inputType).value,
-        description: document.querySelector(DOMstrings.inputType).value,
+        description: document.querySelector(DOMstrings.inputDescription).value,
         value: document.querySelector(DOMstrings.inputValue).value,
       };
+    },
+    getDOMstrings: function () {
+      return DOMstrings;
     },
   };
 })();
 
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl) {
+  var setupEventListeners = function () {
+    var DOM = UICtrl.getDOMstrings();
+    document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+
+    document.addEventListener("keypress", function (event) {
+      if (event.keyCode === 13 || event.which === 13) {
+        ctrlAddItem();
+      }
+    });
+  };
+
   var ctrlAddItem = function () {
     // 1. Get the filed input Data
     var input = UICtrl.getInput();
-    console.log(input);
+
     // 2. Add the item to the budget controller
+    var newItem = budgetCtrl.addItem(
+      input.type,
+      input.description,
+      input.value
+    );
+
     // 3. Add the item to the UI
     // 4. Calculate the budget
     // 5. Display the budget on the UI
   };
 
-  document.querySelector(".add__btn").addEventListener("click", ctrlAddItem);
-
-  document.addEventListener("keypress", function (event) {
-    if (event.keyCode === 13 || event.which === 13) {
-      ctrlAddItem();
-    }
-  });
+  return {
+    init: function () {
+      console.log("applicatin started now");
+      setupEventListeners();
+    },
+  };
 })(budgetController, UIController);
 
-// ye may ny r1 may likha tah
-
-/// ye may ny master may likha tah before commit of master
-
-/// ye finnally r1 wala hai commit k baad
+controller.init();
