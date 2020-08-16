@@ -498,7 +498,6 @@ var budgetController = (function () {
       // Push it into our Data Structure
       data.allItems[type].push(newItem);
 
-      // return the new element
       return newItem;
     },
 
